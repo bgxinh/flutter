@@ -2,8 +2,14 @@
 
 ## Getting Started
 
-## flutter channel master
+```javascript
+flutter channel master
+```
 
-## flutter pub upgrade
+```javascript
+flutter pub upgrader
+```
 
-## flutter run
+```javascript
+flutter run
+```
