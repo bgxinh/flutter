@@ -81,7 +81,7 @@ class _LevelsState extends State<Levels> {
     });
     Future.delayed(Duration(milliseconds: 10), () {
       if (Data.showAds == true) {
-        bannerAds();
+        // bannerAds();
         loadInAd();
         loadReAds();
       }
@@ -99,7 +99,7 @@ class _LevelsState extends State<Levels> {
 
   // late BannerAd _ad;
 
-  bannerAds() {}
+  // bannerAds() {}
 
   checkForAd() {
     return Container(
@@ -342,27 +342,27 @@ class _LevelsState extends State<Levels> {
     }
   }
 
-  setRatingSharing() async {
-    SharedPreferences myPrefs = await SharedPreferences.getInstance();
-    setState(() {
-      myPrefs.setBool("rate", Data.rate);
-      myPrefs.setBool("share", Data.share);
-    });
-  }
+  // setRatingSharing() async {
+  //   SharedPreferences myPrefs = await SharedPreferences.getInstance();
+  //   setState(() {
+  //     myPrefs.setBool("rate", Data.rate);
+  //     myPrefs.setBool("share", Data.share);
+  //   });
+  // }
 
-  getRatingSharing() async {
-    SharedPreferences myPrefs = await SharedPreferences.getInstance();
-    if (myPrefs.getBool("rate") != null) {
-      setState(() {
-        Data.rate = myPrefs.getBool("rate")!;
-      });
-    }
-    if (myPrefs.getBool("share") != null) {
-      setState(() {
-        Data.share = myPrefs.getBool("share")!;
-      });
-    }
-  }
+  // getRatingSharing() async {
+  //   SharedPreferences myPrefs = await SharedPreferences.getInstance();
+  //   if (myPrefs.getBool("rate") != null) {
+  //     setState(() {
+  //       Data.rate = myPrefs.getBool("rate")!;
+  //     });
+  //   }
+  //   if (myPrefs.getBool("share") != null) {
+  //     setState(() {
+  //       Data.share = myPrefs.getBool("share")!;
+  //     });
+  //   }
+  // }
 
   first() {
     for (int i = 1;
@@ -1442,13 +1442,13 @@ class _LevelsState extends State<Levels> {
                                 widget.level == 10 ||
                                 widget.level == 15) {
                               if (widget.level == 4 || widget.level == 15) {
-                                getRatingSharing();
+                                // getRatingSharing();
                                 Future.delayed(Duration(milliseconds: 200), () {
                                   setState(() {
                                     if (Data.rate == false) {
-                                      rate("If you like playing our\n"
-                                          " game,Please consider\n"
-                                          "  rating our game 5⭐\n");
+                                      // rate("If you like playing our\n"
+                                      //     " game,Please consider\n"
+                                      //     "  rating our game 5⭐\n");
                                     }
                                   });
                                 });
@@ -1457,9 +1457,9 @@ class _LevelsState extends State<Levels> {
                                 Future.delayed(Duration(milliseconds: 200), () {
                                   setState(() {
                                     if (Data.share == false) {
-                                      share("  If you like playing,\n"
-                                          "please consider shearing\n"
-                                          "   it with friends");
+                                      // share("  If you like playing,\n"
+                                      //     "please consider shearing\n"
+                                      //     "   it with friends");
                                     }
                                   });
                                 });
@@ -1483,135 +1483,135 @@ class _LevelsState extends State<Levels> {
         });
   }
 
-  rate(String yo) {
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Center(child: Text(yo)),
-            elevation: 5,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(30),
-            ),
-            actions: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 20),
-                      child: Text(
-                        "cancel",
-                        style: TextStyle(
-                          fontSize: 21,
-                          color: Color(0xff151515),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.11,
-                  ),
-                  MaterialButton(
-                    elevation: 10,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    color: Colors.red,
-                    minWidth: 120,
-                    height: 50,
-                    onPressed: () {
-                      setState(() {
-                        Data.rate = true;
-                        setRatingSharing();
-                      });
-                      launch(
-                          "https://play.google.com/store/apps/details?id=com.blackhole.memory");
-                      Navigator.of(context).pop();
-                    },
-                    child: Text(
-                      'Rate ⭐',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          );
-        });
-  }
+  // rate(String yo) {
+  //   showDialog(
+  //       context: context,
+  //       builder: (BuildContext context) {
+  //         return AlertDialog(
+  //           title: Center(child: Text(yo)),
+  //           elevation: 5,
+  //           shape: RoundedRectangleBorder(
+  //             borderRadius: BorderRadius.circular(30),
+  //           ),
+  //           actions: [
+  //             Row(
+  //               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+  //               crossAxisAlignment: CrossAxisAlignment.center,
+  //               children: [
+  //                 GestureDetector(
+  //                   onTap: () {
+  //                     Navigator.of(context).pop();
+  //                   },
+  //                   child: Padding(
+  //                     padding: const EdgeInsets.only(left: 20),
+  //                     child: Text(
+  //                       "cancel",
+  //                       style: TextStyle(
+  //                         fontSize: 21,
+  //                         color: Color(0xff151515),
+  //                       ),
+  //                     ),
+  //                   ),
+  //                 ),
+  //                 SizedBox(
+  //                   width: MediaQuery.of(context).size.width * 0.11,
+  //                 ),
+  //                 MaterialButton(
+  //                   elevation: 10,
+  //                   shape: RoundedRectangleBorder(
+  //                     borderRadius: BorderRadius.circular(30),
+  //                   ),
+  //                   color: Colors.red,
+  //                   minWidth: 120,
+  //                   height: 50,
+  //                   onPressed: () {
+  //                     setState(() {
+  //                       Data.rate = true;
+  //                       // setRatingSharing();
+  //                     });
+  //                     launch(
+  //                         "https://play.google.com/store/apps/details?id=com.blackhole.memory");
+  //                     Navigator.of(context).pop();
+  //                   },
+  //                   child: Text(
+  //                     'Rate ⭐',
+  //                     style: TextStyle(
+  //                       fontWeight: FontWeight.bold,
+  //                       fontSize: 18,
+  //                       color: Colors.white,
+  //                     ),
+  //                   ),
+  //                 ),
+  //               ],
+  //             ),
+  //           ],
+  //         );
+  //       });
+  // }
 
-  share(String yo) {
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Center(child: Text(yo)),
-            elevation: 5,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(30),
-            ),
-            actions: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 20),
-                      child: Text(
-                        "cancel",
-                        style: TextStyle(
-                          fontSize: 21,
-                          color: Color(0xff151515),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.11,
-                  ),
-                  MaterialButton(
-                    elevation: 10,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    color: Colors.red,
-                    minWidth: 120,
-                    height: 50,
-                    onPressed: () {
-                      setState(() {
-                        Data.share = true;
-                        setRatingSharing();
-                      });
-                      Share.share(
-                          "https://play.google.com/store/apps/details?id=com.blackhole.memory");
-                      Navigator.of(context).pop();
-                    },
-                    child: Text(
-                      'Share',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          );
-        });
-  }
+  // share(String yo) {
+  //   showDialog(
+  //       context: context,
+  //       builder: (BuildContext context) {
+  //         return AlertDialog(
+  //           title: Center(child: Text(yo)),
+  //           elevation: 5,
+  //           shape: RoundedRectangleBorder(
+  //             borderRadius: BorderRadius.circular(30),
+  //           ),
+  //           actions: [
+  //             Row(
+  //               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+  //               crossAxisAlignment: CrossAxisAlignment.center,
+  //               children: [
+  //                 GestureDetector(
+  //                   onTap: () {
+  //                     Navigator.of(context).pop();
+  //                   },
+  //                   child: Padding(
+  //                     padding: const EdgeInsets.only(left: 20),
+  //                     child: Text(
+  //                       "cancel",
+  //                       style: TextStyle(
+  //                         fontSize: 21,
+  //                         color: Color(0xff151515),
+  //                       ),
+  //                     ),
+  //                   ),
+  //                 ),
+  //                 SizedBox(
+  //                   width: MediaQuery.of(context).size.width * 0.11,
+  //                 ),
+  //                 MaterialButton(
+  //                   elevation: 10,
+  //                   shape: RoundedRectangleBorder(
+  //                     borderRadius: BorderRadius.circular(30),
+  //                   ),
+  //                   color: Colors.red,
+  //                   minWidth: 120,
+  //                   height: 50,
+  //                   onPressed: () {
+  //                     setState(() {
+  //                       Data.share = true;
+  //                       setRatingSharing();
+  //                     });
+  //                     Share.share(
+  //                         "https://play.google.com/store/apps/details?id=com.blackhole.memory");
+  //                     Navigator.of(context).pop();
+  //                   },
+  //                   child: Text(
+  //                     'Share',
+  //                     style: TextStyle(
+  //                       fontWeight: FontWeight.bold,
+  //                       fontSize: 18,
+  //                       color: Colors.white,
+  //                     ),
+  //                   ),
+  //                 ),
+  //               ],
+  //             ),
+  //           ],
+  //         );
+  //       });
+  // }
 }

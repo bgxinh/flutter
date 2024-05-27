@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:memory/data/data.dart';
 import 'package:memory/screen/high%20score.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import 'help.dart';
 import 'home screen.dart';
 
 class Setting extends StatefulWidget {
@@ -22,22 +20,8 @@ class _SettingState extends State<Setting> {
     }
   }
 
-  // late BannerAd _ad;
 
   bannerAds() {}
-
-  checkForAd() {
-    return Container(
-      height: 250,
-      width: 320,
-    );
-  }
-
-  musicStop() async {
-    SharedPreferences myPrefs = await SharedPreferences.getInstance();
-    myPrefs.setBool("play", Data.neverPlay);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -113,13 +97,11 @@ class _SettingState extends State<Setting> {
                                   setState(() {
                                     audioPlayer.pause();
                                     Data.neverPlay = true;
-                                    musicStop();
                                   });
                                 } else {
                                   setState(() {
                                     audioPlayer.resume();
                                     Data.neverPlay = false;
-                                    musicStop();
                                   });
                                 }
                               });
@@ -129,39 +111,6 @@ class _SettingState extends State<Setting> {
                             inactiveTrackColor: Colors.grey,
                           ),
                         ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 15),
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.push(context, MaterialPageRoute(
-                      builder: (context) {
-                        return Help();
-                      },
-                    ));
-                  },
-                  child: Container(
-                    color: Colors.transparent,
-                    height: 60,
-                    width: MediaQuery.of(context).size.width * 0.5,
-                    child: Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(25),
-                      ),
-                      color: Colors.white,
-                      child: Center(
-                        child: Text(
-                          "About us",
-                          style: TextStyle(
-                            color: Color(0xffDD2A7B),
-                            fontWeight: FontWeight.w600,
-                            fontSize: 20,
-                          ),
-                        ),
                       ),
                     ),
                   ),
@@ -229,7 +178,6 @@ class _SettingState extends State<Setting> {
               SizedBox(
                 height: 15,
               ),
-              checkForAd(),
             ],
           ),
         ),

@@ -495,10 +495,6 @@ class _ChallengesLevelState extends State<ChallengesLevel> {
                     minWidth: 120,
                     height: 50,
                     onPressed: () {
-                      if (Data.showAds == true) {
-                        showReAds();
-                        loadReAds();
-                      }
                       restart();
                       Navigator.of(context).pop();
                     },

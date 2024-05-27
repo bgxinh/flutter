@@ -6,7 +6,7 @@ void main() {
     title: "Memory Game",
     debugShowCheckedModeBanner: false,
     theme: ThemeData(
-      primaryColor: Color(0xffC850C0),
+      primaryColor: Color.fromARGB(255, 216, 72, 20),
     ),
     home: HomeScreen(),
   ));

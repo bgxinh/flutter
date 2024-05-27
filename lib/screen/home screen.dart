@@ -4,7 +4,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:memory/data/data.dart';
-import 'package:memory/screen/brain_jam.dart';
 import 'package:memory/screen/challenges.dart';
 import 'package:memory/screen/high%20score.dart';
 import 'package:memory/screen/memoryGame.dart';
@@ -15,7 +14,6 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'challenges page.dart';
-import 'help.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -41,40 +39,12 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     super.initState();
     getHighScore();
     WidgetsBinding.instance.addObserver(this);
-    musicName();
-    showAds();
     timer = Timer.periodic(Duration(milliseconds: 2700), (timer) {
       setState(() {
         if (Data.play == true && Data.neverPlay == false) {
           playAgain();
         }
         change = !change;
-      });
-    });
-  }
-
-  showAds() {
-    fireStore.then((value) async {
-      FirebaseFirestore.instance
-          .collection("memory")
-          .doc("1")
-          .get()
-          .then((result) {
-        setState(() {
-          // Data.showAds = result.get("showAds");
-        });
-      });
-    });
-  }
-
-  musicName() async {
-    fireStore.then((value) async {
-      FirebaseFirestore.instance
-          .collection("memory")
-          .doc("1")
-          .get()
-          .then((result) {
-        Data.music = result.get("music");
       });
     });
   }
@@ -116,7 +86,6 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
         }
         break;
       default:
-        // Handle AppLifecycleState.hidden case here
         break;
     }
   }
@@ -151,22 +120,6 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
       setState(() {
         Data.neverPlay = myPrefs.getBool("play")!;
       });
-    }
-  }
-
-  rate() async {
-    try {
-      fireStore.then((value) async {
-        FirebaseFirestore.instance
-            .collection("memory")
-            .doc("1")
-            .get()
-            .then((result) {
-          launch(result.get("stars"));
-        });
-      });
-    } catch (e) {
-      snackBar("Something went wrong");
     }
   }
 
@@ -243,6 +196,34 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  // Container(
+                  //   height: MediaQuery.of(context).size.height * 0.2,
+                  //   width: MediaQuery.of(context).size.width * 0.75,
+                  //   child: Card(
+                  //     margin: EdgeInsets.all(0),
+                  //     color: Colors.white,
+                  //     shape: RoundedRectangleBorder(
+                  //       borderRadius: BorderRadius.circular(25),
+                  //     ),
+                  //     elevation: 10,
+                  //     child: Center(
+                  //       child: AnimatedTextKit(
+                  //         animatedTexts: [
+                  //           WavyAnimatedText("Memory Game",
+                  //               speed: Duration(milliseconds: 450),
+                  //               textStyle: TextStyle(
+                  //                 fontSize: 29,
+                  //                 fontFamily: "Source",
+                  //                 fontWeight: FontWeight.w600,
+                  //                 color: Color(0xffDD2A7B),
+                  //               )),
+                  //         ],
+                  //         repeatForever: true,
+                  //         isRepeatingAnimation: true,
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                   Container(
                     height: MediaQuery.of(context).size.height * 0.2,
                     width: MediaQuery.of(context).size.width * 0.75,
@@ -254,19 +235,14 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                       ),
                       elevation: 10,
                       child: Center(
-                        child: AnimatedTextKit(
-                          animatedTexts: [
-                            WavyAnimatedText("Memory Game",
-                                speed: Duration(milliseconds: 450),
-                                textStyle: TextStyle(
-                                  fontSize: 29,
-                                  fontFamily: "Source",
-                                  fontWeight: FontWeight.w600,
-                                  color: Color(0xffDD2A7B),
-                                )),
-                          ],
-                          repeatForever: true,
-                          isRepeatingAnimation: true,
+                        child: Text(
+                          "Memory Game",
+                          style: TextStyle(
+                            fontSize: 29,
+                            fontFamily: "Source",
+                            fontWeight: FontWeight.w600,
+                            color: Color(0xffDD2A7B),
+                          ),
                         ),
                       ),
                     ),
@@ -415,49 +391,6 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                   SizedBox(
                     height: 30,
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(context, MaterialPageRoute(
-                        builder: (context) {
-                          return BrainJam();
-                        },
-                      ));
-                    },
-                    onTapDown: (value) {
-                      setState(() {
-                        highScore = true;
-                      });
-                    },
-                    onTapUp: (value) {
-                      setState(() {
-                        highScore = false;
-                      });
-                    },
-                    child: AnimatedContainer(
-                      duration: Duration(milliseconds: 200),
-                      curve: Curves.bounceInOut,
-                      height: highScore == false ? 65 : 60,
-                      width: highScore == false ? 200 : 185,
-                      child: Card(
-                        margin: EdgeInsets.all(0),
-                        color: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        elevation: 10,
-                        child: Center(
-                            child: Text(
-                          "Brain Jam",
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontFamily: "Source",
-                            fontWeight: FontWeight.w600,
-                            color: Color(0xffDD2A7B),
-                          ),
-                        )),
-                      ),
-                    ),
-                  ),
                 ],
               ),
             ),
@@ -484,33 +417,6 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
                           Data.neverPlay = false;
                         }
                       });
-                    },
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.help),
-                    iconSize: 26,
-                    color: Colors.white,
-                    onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return Help();
-                      }));
-                    },
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.star),
-                    iconSize: 26,
-                    color: Colors.white,
-                    onPressed: () {
-                      rate();
-                    },
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.share),
-                    iconSize: 25,
-                    color: Colors.white,
-                    onPressed: () {
-                      share();
                     },
                   ),
                   IconButton(
