@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:memory/data/data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,7 +12,6 @@ class ChallengesLevel extends StatefulWidget {
 }
 
 class _ChallengesLevelState extends State<ChallengesLevel> {
-  final fireStore = Firebase.initializeApp();
 
   bool show = true;
   bool choose = false;

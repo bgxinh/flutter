@@ -102,15 +102,11 @@ Future<void> _playBackgroundMusic() async {
                             onChanged: (value) {
                               setState(() {
                                 if (Data.neverPlay == false) {
-                                  setState(() {
                                     bgSound.pause();
                                     Data.neverPlay = true;
-                                  });
                                 } else {
-                                  setState(() {
                                     bgSound.resume();
                                     Data.neverPlay = false;
-                                  });
                                 }
                               });
                             },

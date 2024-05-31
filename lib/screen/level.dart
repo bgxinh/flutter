@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:memory/data/data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -15,7 +14,6 @@ class Levels extends StatefulWidget {
 
 class _LevelsState extends State<Levels> {
   AudioPlayer soundEffect = AudioPlayer();
-  final fireStore = Firebase.initializeApp();
 
   bool show = true;
   bool choose = false;
@@ -71,7 +69,6 @@ class _LevelsState extends State<Levels> {
   @override
   void initState() {
     super.initState();
-    _setSoundEffect();
     getHighScore();
     first();
     Future.delayed(const Duration(milliseconds: 5), () {
@@ -88,13 +85,9 @@ class _LevelsState extends State<Levels> {
     soundEffect.dispose();
   }
 
-  Future _setSoundEffect() async {
-    await soundEffect.setSource(AssetSource("audios/soundeffect.wav"));
-}
-
   Future _playSoundEffect() async {
   if (!Data.neverPlay) {
-    await soundEffect.resume();
+    await soundEffect.play(AssetSource("audios/soundeffect.wav"));
   }
 }
 
@@ -343,91 +336,91 @@ class _LevelsState extends State<Levels> {
   timeLeft() {
     if (widget.level == 1) {
       setState(() {
-        remainingTime = 18;
+        remainingTime = 30;
         highScore = Data.level_1;
         highScoreTime = Data.time_1;
       });
     } else if (widget.level == 2) {
       setState(() {
-        remainingTime = 15;
+        remainingTime = 25;
         highScore = Data.level_2;
         highScoreTime = Data.time_2;
       });
     } else if (widget.level == 3) {
       setState(() {
-        remainingTime = 20;
+        remainingTime = 30;
         highScore = Data.level_3;
         highScoreTime = Data.time_3;
       });
     } else if (widget.level == 4) {
       setState(() {
-        remainingTime = 15;
+        remainingTime = 25;
         highScore = Data.level_4;
         highScoreTime = Data.time_4;
       });
     } else if (widget.level == 5) {
       setState(() {
-        remainingTime = 18;
+        remainingTime = 30;
         highScore = Data.level_5;
         highScoreTime = Data.time_5;
       });
     } else if (widget.level == 6) {
       setState(() {
-        remainingTime = 22;
+        remainingTime = 32;
         highScore = Data.level_6;
         highScoreTime = Data.time_6;
       });
     } else if (widget.level == 7) {
       setState(() {
-        remainingTime = 24;
+        remainingTime = 34;
         highScore = Data.level_7;
         highScoreTime = Data.time_7;
       });
     } else if (widget.level == 8) {
       setState(() {
-        remainingTime = 30;
+        remainingTime = 40;
         highScore = Data.level_8;
         highScoreTime = Data.time_8;
       });
     } else if (widget.level == 9) {
       setState(() {
-        remainingTime = 34;
+        remainingTime = 44;
         highScore = Data.level_9;
         highScoreTime = Data.time_9;
       });
     } else if (widget.level == 10) {
       setState(() {
-        remainingTime = 35;
+        remainingTime = 45;
         highScore = Data.level_10;
         highScoreTime = Data.time_10;
       });
     } else if (widget.level == 11) {
       setState(() {
-        remainingTime = 28;
+        remainingTime = 38;
         highScore = Data.level_11;
         highScoreTime = Data.time_11;
       });
     } else if (widget.level == 12) {
       setState(() {
-        remainingTime = 24;
+        remainingTime = 34;
         highScore = Data.level_12;
         highScoreTime = Data.time_12;
       });
     } else if (widget.level == 13) {
       setState(() {
-        remainingTime = 28;
+        remainingTime = 38;
         highScore = Data.level_13;
         highScoreTime = Data.time_13;
       });
     } else if (widget.level == 14) {
       setState(() {
-        remainingTime = 26;
+        remainingTime = 36;
         highScore = Data.level_14;
         highScoreTime = Data.time_14;
       });
     } else if (widget.level == 15) {
       setState(() {
-        remainingTime = 30;
+        remainingTime = 40;
         highScore = Data.level_15;
         highScoreTime = Data.time_15;
       });
