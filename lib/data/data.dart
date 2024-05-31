@@ -49,10 +49,4 @@ class Data{
 
   static bool play = true;
   static bool neverPlay = false;
-  static String music = "";
-
-  static bool showAds = false;
-
-  static bool share = false;
-  static bool rate = false;
 }
