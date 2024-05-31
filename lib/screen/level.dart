@@ -1,23 +1,20 @@
 import 'dart:async';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:memory/data/data.dart';
-import 'package:share/share.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:audioplayers/audioplayers.dart';
 
-// ignore: must_be_immutable
 class Levels extends StatefulWidget {
   int level = 1;
   int open = 1;
-  Levels({required this.level, required this.open});
+  Levels({super.key, required this.level, required this.open});
   @override
   _LevelsState createState() => _LevelsState();
 }
 
 class _LevelsState extends State<Levels> {
+  AudioPlayer soundEffect = AudioPlayer();
   final fireStore = Firebase.initializeApp();
 
   bool show = true;
@@ -74,59 +71,32 @@ class _LevelsState extends State<Levels> {
   @override
   void initState() {
     super.initState();
+    _setSoundEffect();
     getHighScore();
     first();
-    Future.delayed(Duration(milliseconds: 5), () {
+    Future.delayed(const Duration(milliseconds: 5), () {
       timeLeft();
     });
-    Future.delayed(Duration(milliseconds: 10), () {
-      if (Data.showAds == true) {
-        // bannerAds();
-        loadInAd();
-        loadReAds();
-      }
+    Future.delayed(const Duration(milliseconds: 10), () {
     });
   }
 
   @override
   void dispose() {
     super.dispose();
-    timer?.cancel();
-    if (Data.showAds == true) {
-      //  _ad?.dispose();
-    }
+    timer.cancel();
+    soundEffect.dispose();
   }
 
-  // late BannerAd _ad;
+  Future _setSoundEffect() async {
+    await soundEffect.setSource(AssetSource("audios/soundeffect.wav"));
+}
 
-  // bannerAds() {}
-
-  checkForAd() {
-    return Container(
-      height: 50,
-      width: 320,
-    );
+  Future _playSoundEffect() async {
+  if (!Data.neverPlay) {
+    await soundEffect.resume();
   }
-
-  // late InterstitialAd _in;
-
-  loadInAd() {}
-
-  showInAd() {
-    if (isLoadedIn == true) {
-      //  _in.show();
-    }
-  }
-
-  //late RewardedAd _re;
-
-  loadReAds() {}
-
-  showReAds() {
-    if (Data.showAds == true) {
-      //_re.show();
-    }
-  }
+}
 
   setHighScore() async {
     SharedPreferences myPrefs = await SharedPreferences.getInstance();
@@ -342,28 +312,6 @@ class _LevelsState extends State<Levels> {
     }
   }
 
-  // setRatingSharing() async {
-  //   SharedPreferences myPrefs = await SharedPreferences.getInstance();
-  //   setState(() {
-  //     myPrefs.setBool("rate", Data.rate);
-  //     myPrefs.setBool("share", Data.share);
-  //   });
-  // }
-
-  // getRatingSharing() async {
-  //   SharedPreferences myPrefs = await SharedPreferences.getInstance();
-  //   if (myPrefs.getBool("rate") != null) {
-  //     setState(() {
-  //       Data.rate = myPrefs.getBool("rate")!;
-  //     });
-  //   }
-  //   if (myPrefs.getBool("share") != null) {
-  //     setState(() {
-  //       Data.share = myPrefs.getBool("share")!;
-  //     });
-  //   }
-  // }
-
   first() {
     for (int i = 1;
         widget.level == 1
@@ -389,7 +337,7 @@ class _LevelsState extends State<Levels> {
       a.add(i.toString());
       a.add(i.toString());
     }
-    // a.shuffle();
+    a.shuffle();
   }
 
   timeLeft() {
@@ -490,7 +438,7 @@ class _LevelsState extends State<Levels> {
     if (index == i || y == index) {
       return widget.open == 1
           ? Image.asset(
-              "asset/images/${a[index]}.png",
+              "assets/images/${a[index]}.png",
               fit: BoxFit.contain,
               width: widget.level == 1
                   ? 75
@@ -504,24 +452,24 @@ class _LevelsState extends State<Levels> {
             )
           : widget.open == 2
               ? Text(emoji[int.parse(a[index])],
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 32,
                     color: Colors.white,
                   ))
               : widget.open == 3
                   ? Text(a[index],
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 32,
                         color: Colors.white,
                       ))
                   : widget.open == 4
                       ? Text(symbols[int.parse(a[index])],
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 32,
                             color: Colors.white,
                           ))
                       : Image.asset(
-                          "asset/images/${a[index]}.png",
+                          "assets/images/${a[index]}.png",
                           fit: BoxFit.contain,
                           width: widget.level == 1
                               ? 77
@@ -536,7 +484,7 @@ class _LevelsState extends State<Levels> {
     } else {
       return widget.open == 1
           ? Image.asset(
-              "asset/images/3.png",
+              "assets/images/3.png",
               width: widget.level == 1
                   ? 80
                   : widget.level == 2
@@ -547,17 +495,17 @@ class _LevelsState extends State<Levels> {
                               ? 60
                               : 50,
               fit: BoxFit.contain,
-              color: Color(0xffDD2A7B).withOpacity(0.85),
+              color: const Color(0xffDD2A7B).withOpacity(0.85),
             )
           : Text("?",
               style: TextStyle(
                   fontSize: widget.level == 1 ? 38 : 30,
-                  color: Color(0xffDD2A7B).withOpacity(0.85)));
+                  color: const Color(0xffDD2A7B).withOpacity(0.85)));
     }
   }
 
   time() {
-    timer = Timer.periodic(Duration(seconds: 1), (timer) {
+    timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
         gameTime++;
         if (gameTime > 8) {
@@ -583,7 +531,7 @@ class _LevelsState extends State<Levels> {
         });
       },
       child: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
             gradient: LinearGradient(
                 begin: Alignment.topRight,
                 end: Alignment.bottomLeft,
@@ -603,14 +551,15 @@ class _LevelsState extends State<Levels> {
             centerTitle: true,
             backgroundColor: Colors.transparent,
             leading: IconButton(
-              icon: Icon(Icons.arrow_back_ios),
+              icon: const Icon(Icons.arrow_back_ios),
               onPressed: () {
+                _playSoundEffect();
                 Navigator.of(context).pop();
               },
             ),
             title: Text(
               "Level ${widget.level}",
-              style: TextStyle(
+              style: const TextStyle(
                   color: Colors.white,
                   fontSize: 25,
                   fontWeight: FontWeight.w600),
@@ -631,7 +580,7 @@ class _LevelsState extends State<Levels> {
                               remainingTime - gameTime != 0
                                   ? "${remainingTime - gameTime} sec left"
                                   : "Game Over",
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 30,
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
@@ -647,29 +596,29 @@ class _LevelsState extends State<Levels> {
                               borderRadius: BorderRadius.circular(10),
                             ),
                             color: Colors.white,
-                            splashColor: Color(0xffDD2A7B),
+                            splashColor: const Color(0xffDD2A7B),
                             minWidth: 120,
                             height: 50,
                             onPressed: () {
+                              _playSoundEffect();
                               showWinDialog("Memory Game");
                               setState(() {
                                 restartG = true;
                                 choose = false;
                               });
                             },
-                            child: Text(
+                            child: const Text(
                               'Restart',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 18,
                                 color: Color(0xffDD2A7B),
-                                // fontFamily: 'David',
                               ),
                             ),
                           ),
                         ],
                       )
-                    : Container(
+                    : SizedBox(
                         width: 350,
                         height: 90,
                         child: Card(
@@ -683,7 +632,7 @@ class _LevelsState extends State<Levels> {
                                   ? "Remaining time: $remainingTime sec"
                                   : "High Score in Level ${widget.level}\n"
                                       "   $highScore turns in $highScoreTime sec",
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 22,
                                 color: Color(0xffDD2A7B),
                                 fontWeight: FontWeight.w600,
@@ -694,7 +643,7 @@ class _LevelsState extends State<Levels> {
                       ),
               ),
               AnimatedPositioned(
-                duration: Duration(milliseconds: 350),
+                duration: const Duration(milliseconds: 350),
                 top: numberOfTurns >= 1
                     ? MediaQuery.of(context).size.height * 0.135
                     : MediaQuery.of(context).size.height * 0.165,
@@ -704,7 +653,7 @@ class _LevelsState extends State<Levels> {
                   padding: const EdgeInsets.all(10),
                   child: GridView.builder(
                     shrinkWrap: true,
-                    physics: BouncingScrollPhysics(),
+                    physics: const BouncingScrollPhysics(),
                     itemCount: a.length == null ? 0 : a.length,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: widget.level == 1
@@ -728,9 +677,6 @@ class _LevelsState extends State<Levels> {
                             });
                             if (numberOfTurns == 0) {
                               time();
-                              if (Data.showAds == true) {
-                                // _ad.load();
-                              }
                             }
                             if (i != index &&
                                 !b.contains(a[index]) &&
@@ -775,7 +721,7 @@ class _LevelsState extends State<Levels> {
                               ? Center(
                                   child: b.contains(a[index])
                                       ? Image.asset(
-                                          "asset/images/${a[index]}.png",
+                                          "assets/images/${a[index]}.png",
                                           fit: BoxFit.contain,
                                           width: widget.level == 1
                                               ? 85
@@ -794,7 +740,7 @@ class _LevelsState extends State<Levels> {
                                       child: b.contains(a[index])
                                           ? Text(
                                               emoji[int.parse(a[index])],
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                 fontSize: 32,
                                                 color: Colors.white,
                                               ),
@@ -806,7 +752,7 @@ class _LevelsState extends State<Levels> {
                                           child: b.contains(a[index])
                                               ? Text(
                                                   a[index],
-                                                  style: TextStyle(
+                                                  style: const TextStyle(
                                                     fontSize: 32,
                                                     color: Colors.white,
                                                   ),
@@ -819,7 +765,7 @@ class _LevelsState extends State<Levels> {
                                                   ? Text(
                                                       symbols[
                                                           int.parse(a[index])],
-                                                      style: TextStyle(
+                                                      style: const TextStyle(
                                                         fontSize: 32,
                                                         color: Colors.white,
                                                       ),
@@ -830,7 +776,7 @@ class _LevelsState extends State<Levels> {
                                               child: b.contains(a[index])
                                                   ? Text(
                                                       a[index],
-                                                      style: TextStyle(
+                                                      style: const TextStyle(
                                                         fontSize: 32,
                                                         color: Colors.white,
                                                       ),
@@ -842,12 +788,6 @@ class _LevelsState extends State<Levels> {
                     },
                   ),
                 ),
-              ),
-              Positioned(
-                bottom: 0,
-                height: 50,
-                width: 320,
-                child: checkForAd(),
               ),
             ],
           ),
@@ -1365,109 +1305,91 @@ class _LevelsState extends State<Levels> {
     });
   }
 
-  showWinDialog(String yo) {
+  void showWinDialog(String yo) {
     showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Center(child: Text(yo)),
-            elevation: 5,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(30),
-            ),
-            actions: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 20),
-                      child: Text(
-                        "cancel",
-                        style: TextStyle(
-                          fontSize: 21,
-                          color: Color(0xff151515),
-                        ),
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Center(child: Text(yo)),
+          elevation: 5,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
+          actions: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Padding(
+                    padding: EdgeInsets.only(left: 20),
+                    child: Text(
+                      "Cancel",
+                      style: TextStyle(
+                        fontSize: 21,
+                        color: Color(0xff151515),
                       ),
                     ),
                   ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.11,
-                  ),
-                  nextLevel == false
-                      ? MaterialButton(
+                ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.11,
+                ),
+                nextLevel == false
+                    ? MaterialButton(
+                        elevation: 10,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        color: Colors.red,
+                        minWidth: 120,
+                        height: 50,
+                        onPressed: () {
+                          _playSoundEffect();  // Play sound effect on button press
+                          restart();
+                          Navigator.of(context).pop();
+                        },
+                        child: const Text(
+                          'Restart',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            color: Colors.white,
+                          ),
+                        ),
+                      )
+                    : Expanded(
+                        child: MaterialButton(
                           elevation: 10,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30),
                           ),
                           color: Colors.red,
-                          minWidth: 120,
                           height: 50,
                           onPressed: () {
-                            if (Data.showAds == true) {
-                              showInAd();
-                              loadInAd();
-                            }
-                            restart();
-                            Navigator.of(context).pop();
-                          },
-                          child: Text(
-                            'Restart',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18,
-                              color: Colors.white,
-                            ),
-                          ),
-                        )
-                      : MaterialButton(
-                          elevation: 10,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                          color: Colors.red,
-                          minWidth: 140,
-                          height: 50,
-                          onPressed: () {
-                            if (Data.showAds == true) {
-                              showReAds();
-                              loadReAds();
-                            }
+                            _playSoundEffect();  // Play sound effect on button press
                             levelUp();
                             if (widget.level == 4 ||
                                 widget.level == 10 ||
                                 widget.level == 15) {
                               if (widget.level == 4 || widget.level == 15) {
-                                // getRatingSharing();
-                                Future.delayed(Duration(milliseconds: 200), () {
-                                  setState(() {
-                                    if (Data.rate == false) {
-                                      // rate("If you like playing our\n"
-                                      //     " game,Please consider\n"
-                                      //     "  rating our game 5⭐\n");
-                                    }
-                                  });
+                                Future.delayed(const Duration(milliseconds: 200), () {
+                                  setState(() {});
                                 });
                               }
                               if (widget.level == 10) {
-                                Future.delayed(Duration(milliseconds: 200), () {
+                                Future.delayed(const Duration(milliseconds: 200), () {
                                   setState(() {
-                                    if (Data.share == false) {
-                                      // share("  If you like playing,\n"
-                                      //     "please consider shearing\n"
-                                      //     "   it with friends");
-                                    }
                                   });
                                 });
                               }
                             }
                             Navigator.of(context).pop();
                           },
-                          child: Text(
+                          child: const Text(
                             'Next Level',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
@@ -1476,142 +1398,12 @@ class _LevelsState extends State<Levels> {
                             ),
                           ),
                         ),
-                ],
-              ),
-            ],
-          );
-        });
+                      ),
+              ],
+            ),
+          ],
+        );
+      },
+    );
   }
-
-  // rate(String yo) {
-  //   showDialog(
-  //       context: context,
-  //       builder: (BuildContext context) {
-  //         return AlertDialog(
-  //           title: Center(child: Text(yo)),
-  //           elevation: 5,
-  //           shape: RoundedRectangleBorder(
-  //             borderRadius: BorderRadius.circular(30),
-  //           ),
-  //           actions: [
-  //             Row(
-  //               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-  //               crossAxisAlignment: CrossAxisAlignment.center,
-  //               children: [
-  //                 GestureDetector(
-  //                   onTap: () {
-  //                     Navigator.of(context).pop();
-  //                   },
-  //                   child: Padding(
-  //                     padding: const EdgeInsets.only(left: 20),
-  //                     child: Text(
-  //                       "cancel",
-  //                       style: TextStyle(
-  //                         fontSize: 21,
-  //                         color: Color(0xff151515),
-  //                       ),
-  //                     ),
-  //                   ),
-  //                 ),
-  //                 SizedBox(
-  //                   width: MediaQuery.of(context).size.width * 0.11,
-  //                 ),
-  //                 MaterialButton(
-  //                   elevation: 10,
-  //                   shape: RoundedRectangleBorder(
-  //                     borderRadius: BorderRadius.circular(30),
-  //                   ),
-  //                   color: Colors.red,
-  //                   minWidth: 120,
-  //                   height: 50,
-  //                   onPressed: () {
-  //                     setState(() {
-  //                       Data.rate = true;
-  //                       // setRatingSharing();
-  //                     });
-  //                     launch(
-  //                         "https://play.google.com/store/apps/details?id=com.blackhole.memory");
-  //                     Navigator.of(context).pop();
-  //                   },
-  //                   child: Text(
-  //                     'Rate ⭐',
-  //                     style: TextStyle(
-  //                       fontWeight: FontWeight.bold,
-  //                       fontSize: 18,
-  //                       color: Colors.white,
-  //                     ),
-  //                   ),
-  //                 ),
-  //               ],
-  //             ),
-  //           ],
-  //         );
-  //       });
-  // }
-
-  // share(String yo) {
-  //   showDialog(
-  //       context: context,
-  //       builder: (BuildContext context) {
-  //         return AlertDialog(
-  //           title: Center(child: Text(yo)),
-  //           elevation: 5,
-  //           shape: RoundedRectangleBorder(
-  //             borderRadius: BorderRadius.circular(30),
-  //           ),
-  //           actions: [
-  //             Row(
-  //               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-  //               crossAxisAlignment: CrossAxisAlignment.center,
-  //               children: [
-  //                 GestureDetector(
-  //                   onTap: () {
-  //                     Navigator.of(context).pop();
-  //                   },
-  //                   child: Padding(
-  //                     padding: const EdgeInsets.only(left: 20),
-  //                     child: Text(
-  //                       "cancel",
-  //                       style: TextStyle(
-  //                         fontSize: 21,
-  //                         color: Color(0xff151515),
-  //                       ),
-  //                     ),
-  //                   ),
-  //                 ),
-  //                 SizedBox(
-  //                   width: MediaQuery.of(context).size.width * 0.11,
-  //                 ),
-  //                 MaterialButton(
-  //                   elevation: 10,
-  //                   shape: RoundedRectangleBorder(
-  //                     borderRadius: BorderRadius.circular(30),
-  //                   ),
-  //                   color: Colors.red,
-  //                   minWidth: 120,
-  //                   height: 50,
-  //                   onPressed: () {
-  //                     setState(() {
-  //                       Data.share = true;
-  //                       setRatingSharing();
-  //                     });
-  //                     Share.share(
-  //                         "https://play.google.com/store/apps/details?id=com.blackhole.memory");
-  //                     Navigator.of(context).pop();
-  //                   },
-  //                   child: Text(
-  //                     'Share',
-  //                     style: TextStyle(
-  //                       fontWeight: FontWeight.bold,
-  //                       fontSize: 18,
-  //                       color: Colors.white,
-  //                     ),
-  //                   ),
-  //                 ),
-  //               ],
-  //             ),
-  //           ],
-  //         );
-  //       });
-  // }
 }
