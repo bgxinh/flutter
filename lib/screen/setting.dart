@@ -1,59 +1,67 @@
 import 'package:flutter/material.dart';
 import 'package:memory/data/data.dart';
-import 'package:memory/screen/high%20score.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'home screen.dart';
+import 'package:memory/screen/high_score.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 class Setting extends StatefulWidget {
+  const Setting({super.key});
+
   @override
   _SettingState createState() => _SettingState();
 }
 
 class _SettingState extends State<Setting> {
-  bool isLoaded = false;
+  AudioPlayer bgSound = AudioPlayer();
+
 
   @override
   void initState() {
     super.initState();
-    if (Data.showAds == true) {
-      bannerAds();
-    }
+    _playBackgroundMusic();
   }
 
+  @override
+  void dispose() {
+    bgSound.dispose();
+    super.dispose();
+  }
 
-  bannerAds() {}
+Future<void> _playBackgroundMusic() async {
+    if (!Data.neverPlay) {
+      await bgSound.setSource(AssetSource("audios/background.wav"));
+      await bgSound.resume();
+      }
+    }
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.topRight,
-              end: Alignment.bottomLeft,
-              stops: [
-            0,
-            0.46,
-            1
-          ],
-              colors: [
-            Color(0xffFFCC70),
-            Color(0xffC850C0),
-            Color(0xff4158D0),
-          ])),
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topRight,
+          end: Alignment.bottomLeft,
+          stops: [0, 0.46, 1],
+          colors: [Color(0xffFFCC70), Color(0xffC850C0), Color(0xff4158D0)],
+        ),
+      ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           centerTitle: true,
           leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios),
+            icon: const Icon(Icons.arrow_back_ios),
             onPressed: () {
               Navigator.of(context).pop();
             },
           ),
-          title: Text(
+          title: const Text(
             "Settings",
             style: TextStyle(
-                color: Colors.white, fontSize: 25, fontWeight: FontWeight.w600),
+              color: Colors.white,
+              fontSize: 25,
+              fontWeight: FontWeight.w600,
+            ),
           ),
           elevation: 0,
         ),
@@ -81,7 +89,7 @@ class _SettingState extends State<Setting> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Text(
+                          const Text(
                             "Music",
                             style: TextStyle(
                               color: Color(0xffDD2A7B),
@@ -89,24 +97,24 @@ class _SettingState extends State<Setting> {
                               fontSize: 20,
                             ),
                           ),
-                          Switch(
+                           Switch(
                             value: Data.neverPlay == false ? true : false,
                             onChanged: (value) {
                               setState(() {
                                 if (Data.neverPlay == false) {
                                   setState(() {
-                                    audioPlayer.pause();
+                                    bgSound.pause();
                                     Data.neverPlay = true;
                                   });
                                 } else {
                                   setState(() {
-                                    audioPlayer.resume();
+                                    bgSound.resume();
                                     Data.neverPlay = false;
                                   });
                                 }
                               });
                             },
-                            activeTrackColor: Color(0xffDD2A7B),
+                            activeTrackColor: const Color(0xffDD2A7B),
                             activeColor: Colors.white,
                             inactiveTrackColor: Colors.grey,
                           ),
@@ -122,7 +130,7 @@ class _SettingState extends State<Setting> {
                   onTap: () {
                     Navigator.push(context, MaterialPageRoute(
                       builder: (context) {
-                        return HighScore();
+                        return const HighScore(); // Update with actual HighScore class
                       },
                     ));
                   },
@@ -135,7 +143,7 @@ class _SettingState extends State<Setting> {
                         borderRadius: BorderRadius.circular(25),
                       ),
                       color: Colors.white,
-                      child: Center(
+                      child: const Center(
                         child: Text(
                           "High Score",
                           style: TextStyle(
@@ -149,33 +157,7 @@ class _SettingState extends State<Setting> {
                   ),
                 ),
               ),
-              SizedBox(
-                height: 15,
-              ),
-              Container(
-                height: 100,
-                width: MediaQuery.of(context).size.width * 0.9,
-                color: Colors.transparent,
-                child: Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  elevation: 10,
-                  child: Center(
-                    child: Text(
-                      "    If Ads are bothering try playing\n"
-                      " without internet. Subscription will\n"
-                      "        be added soon. Thank you",
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: Color(0xffDD2A7B),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
             ],

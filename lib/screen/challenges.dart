@@ -1,11 +1,12 @@
 import 'dart:async';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:memory/data/data.dart';
 import 'package:memory/screen/level.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Challenges extends StatefulWidget {
+  const Challenges({super.key});
+
   @override
   _ChallengesState createState() => _ChallengesState();
 }
@@ -25,7 +26,7 @@ class _ChallengesState extends State<Challenges> {
   void initState() {
     super.initState();
     getPlayerLevel();
-    timer = Timer.periodic(Duration(milliseconds: 1400), (timer) {
+    timer = Timer.periodic(const Duration(milliseconds: 1400), (timer) {
       setState(() {
         pokeSlide = !pokeSlide;
       });
@@ -51,13 +52,13 @@ class _ChallengesState extends State<Challenges> {
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        duration: Duration(milliseconds: 2000),
+        duration: const Duration(milliseconds: 2000),
         backgroundColor: Colors.white,
-        padding: EdgeInsets.only(left: 25),
+        padding: const EdgeInsets.only(left: 25),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         content: Text(
           s,
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.black,
             fontSize: 16,
             fontWeight: FontWeight.w600,
@@ -71,7 +72,7 @@ class _ChallengesState extends State<Challenges> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
           gradient: LinearGradient(
               begin: Alignment.topRight,
               end: Alignment.bottomLeft,
@@ -92,19 +93,19 @@ class _ChallengesState extends State<Challenges> {
           backgroundColor: Colors.transparent,
           elevation: 0,
           centerTitle: true,
-          title: Text(
+          title: const Text(
             "Levels",
             style: TextStyle(
                 color: Colors.white, fontSize: 25, fontWeight: FontWeight.w600),
           ),
           leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios),
+            icon: const Icon(Icons.arrow_back_ios),
             onPressed: () {
               Navigator.of(context).pop();
             },
           ),
         ),
-        body: Container(
+        body: SizedBox(
           height: MediaQuery.of(context).size.height,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -125,7 +126,7 @@ class _ChallengesState extends State<Challenges> {
                         },
                       ));
                     },
-                    child: Container(
+                    child: SizedBox(
                       height: 70,
                       width: 120,
                       child: Card(
@@ -134,7 +135,7 @@ class _ChallengesState extends State<Challenges> {
                             borderRadius: BorderRadius.circular(20.0),
                           ),
                           elevation: 10,
-                          child: Row(
+                          child: const Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
@@ -165,7 +166,7 @@ class _ChallengesState extends State<Challenges> {
                             "Complete level ${Data.playerLevel} to unlock this level");
                       }
                     },
-                    child: Container(
+                    child: SizedBox(
                       height: 70,
                       width: 120,
                       child: Data.playerLevel >= 2
@@ -175,7 +176,7 @@ class _ChallengesState extends State<Challenges> {
                                 borderRadius: BorderRadius.circular(20.0),
                               ),
                               elevation: 10,
-                              child: Row(
+                              child: const Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
@@ -189,7 +190,7 @@ class _ChallengesState extends State<Challenges> {
                                 ],
                               ))
                           : Card(
-                              color: Color(0xff171717),
+                              color: const Color(0xff171717),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20.0),
                               ),
@@ -219,7 +220,7 @@ class _ChallengesState extends State<Challenges> {
                             "Complete level ${Data.playerLevel} to unlock this level");
                       }
                     },
-                    child: Container(
+                    child: SizedBox(
                       height: 70,
                       width: 120,
                       child: Data.playerLevel >= 3
@@ -229,7 +230,7 @@ class _ChallengesState extends State<Challenges> {
                                 borderRadius: BorderRadius.circular(20.0),
                               ),
                               elevation: 10,
-                              child: Row(
+                              child: const Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
@@ -243,7 +244,7 @@ class _ChallengesState extends State<Challenges> {
                                 ],
                               ))
                           : Card(
-                              color: Color(0xff171717),
+                              color: const Color(0xff171717),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20.0),
                               ),
@@ -278,7 +279,7 @@ class _ChallengesState extends State<Challenges> {
                             "Complete level ${Data.playerLevel} to unlock this level");
                       }
                     },
-                    child: Container(
+                    child: SizedBox(
                       height: 70,
                       width: 120,
                       child: Data.playerLevel >= 4
@@ -288,7 +289,7 @@ class _ChallengesState extends State<Challenges> {
                                 borderRadius: BorderRadius.circular(20.0),
                               ),
                               elevation: 10,
-                              child: Row(
+                              child: const Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
@@ -302,7 +303,7 @@ class _ChallengesState extends State<Challenges> {
                                 ],
                               ))
                           : Card(
-                              color: Color(0xff171717),
+                              color: const Color(0xff171717),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20.0),
                               ),
@@ -331,7 +332,7 @@ class _ChallengesState extends State<Challenges> {
                             "Complete level ${Data.playerLevel} to unlock this level");
                       }
                     },
-                    child: Container(
+                    child: SizedBox(
                       height: 70,
                       width: 120,
                       child: Data.playerLevel >= 5
@@ -341,7 +342,7 @@ class _ChallengesState extends State<Challenges> {
                                 borderRadius: BorderRadius.circular(20.0),
                               ),
                               elevation: 10,
-                              child: Row(
+                              child: const Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
@@ -355,7 +356,7 @@ class _ChallengesState extends State<Challenges> {
                                 ],
                               ))
                           : Card(
-                              color: Color(0xff171717),
+                              color: const Color(0xff171717),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20.0),
                               ),
@@ -384,7 +385,7 @@ class _ChallengesState extends State<Challenges> {
                             "Complete level ${Data.playerLevel} to unlock this level");
                       }
                     },
-                    child: Container(
+                    child: SizedBox(
                       height: 70,
                       width: 120,
                       child: Data.playerLevel >= 6
@@ -394,7 +395,7 @@ class _ChallengesState extends State<Challenges> {
                                 borderRadius: BorderRadius.circular(20.0),
                               ),
                               elevation: 10,
-                              child: Row(
+                              child: const Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
@@ -408,7 +409,7 @@ class _ChallengesState extends State<Challenges> {
                                 ],
                               ))
                           : Card(
-                              color: Color(0xff171717),
+                              color: const Color(0xff171717),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20.0),
                               ),
@@ -443,7 +444,7 @@ class _ChallengesState extends State<Challenges> {
                             "Complete level ${Data.playerLevel} to unlock this level");
                       }
                     },
-                    child: Container(
+                    child: SizedBox(
                       height: 70,
                       width: 120,
                       child: Data.playerLevel >= 7
@@ -453,7 +454,7 @@ class _ChallengesState extends State<Challenges> {
                                 borderRadius: BorderRadius.circular(20.0),
                               ),
                               elevation: 10,
-                              child: Row(
+                              child: const Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
@@ -467,7 +468,7 @@ class _ChallengesState extends State<Challenges> {
                                 ],
                               ))
                           : Card(
-                              color: Color(0xff171717),
+                              color: const Color(0xff171717),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20.0),
                               ),
@@ -496,7 +497,7 @@ class _ChallengesState extends State<Challenges> {
                             "Complete level ${Data.playerLevel} to unlock this level");
                       }
                     },
-                    child: Container(
+                    child: SizedBox(
                       height: 70,
                       width: 120,
                       child: Data.playerLevel >= 8
@@ -506,7 +507,7 @@ class _ChallengesState extends State<Challenges> {
                                 borderRadius: BorderRadius.circular(20.0),
                               ),
                               elevation: 10,
-                              child: Row(
+                              child: const Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
@@ -520,7 +521,7 @@ class _ChallengesState extends State<Challenges> {
                                 ],
                               ))
                           : Card(
-                              color: Color(0xff171717),
+                              color: const Color(0xff171717),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20.0),
                               ),
@@ -549,7 +550,7 @@ class _ChallengesState extends State<Challenges> {
                             "Complete level ${Data.playerLevel} to unlock this level");
                       }
                     },
-                    child: Container(
+                    child: SizedBox(
                       height: 70,
                       width: 120,
                       child: Data.playerLevel >= 9
@@ -559,7 +560,7 @@ class _ChallengesState extends State<Challenges> {
                                 borderRadius: BorderRadius.circular(20.0),
                               ),
                               elevation: 10,
-                              child: Row(
+                              child: const Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
@@ -573,7 +574,7 @@ class _ChallengesState extends State<Challenges> {
                                 ],
                               ))
                           : Card(
-                              color: Color(0xff171717),
+                              color: const Color(0xff171717),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20.0),
                               ),
@@ -608,7 +609,7 @@ class _ChallengesState extends State<Challenges> {
                             "Complete level ${Data.playerLevel} to unlock this level");
                       }
                     },
-                    child: Container(
+                    child: SizedBox(
                       height: 70,
                       width: 120,
                       child: Data.playerLevel >= 10
@@ -618,7 +619,7 @@ class _ChallengesState extends State<Challenges> {
                                 borderRadius: BorderRadius.circular(20.0),
                               ),
                               elevation: 10,
-                              child: Row(
+                              child: const Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
@@ -632,7 +633,7 @@ class _ChallengesState extends State<Challenges> {
                                 ],
                               ))
                           : Card(
-                              color: Color(0xff171717),
+                              color: const Color(0xff171717),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20.0),
                               ),
@@ -661,7 +662,7 @@ class _ChallengesState extends State<Challenges> {
                             "Complete level ${Data.playerLevel} to unlock this level");
                       }
                     },
-                    child: Container(
+                    child: SizedBox(
                       height: 70,
                       width: 120,
                       child: Data.playerLevel >= 11
@@ -671,7 +672,7 @@ class _ChallengesState extends State<Challenges> {
                                 borderRadius: BorderRadius.circular(20.0),
                               ),
                               elevation: 10,
-                              child: Row(
+                              child: const Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
@@ -685,7 +686,7 @@ class _ChallengesState extends State<Challenges> {
                                 ],
                               ))
                           : Card(
-                              color: Color(0xff171717),
+                              color: const Color(0xff171717),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20.0),
                               ),
@@ -714,7 +715,7 @@ class _ChallengesState extends State<Challenges> {
                             "Complete level ${Data.playerLevel} to unlock this level");
                       }
                     },
-                    child: Container(
+                    child: SizedBox(
                       height: 70,
                       width: 120,
                       child: Data.playerLevel >= 12
@@ -724,7 +725,7 @@ class _ChallengesState extends State<Challenges> {
                                 borderRadius: BorderRadius.circular(20.0),
                               ),
                               elevation: 10,
-                              child: Row(
+                              child: const Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
@@ -738,7 +739,7 @@ class _ChallengesState extends State<Challenges> {
                                 ],
                               ))
                           : Card(
-                              color: Color(0xff171717),
+                              color: const Color(0xff171717),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20.0),
                               ),
@@ -773,7 +774,7 @@ class _ChallengesState extends State<Challenges> {
                             "Complete level ${Data.playerLevel} to unlock this level");
                       }
                     },
-                    child: Container(
+                    child: SizedBox(
                       height: 70,
                       width: 120,
                       child: Data.playerLevel >= 13
@@ -783,7 +784,7 @@ class _ChallengesState extends State<Challenges> {
                                 borderRadius: BorderRadius.circular(20.0),
                               ),
                               elevation: 10,
-                              child: Row(
+                              child: const Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
@@ -797,7 +798,7 @@ class _ChallengesState extends State<Challenges> {
                                 ],
                               ))
                           : Card(
-                              color: Color(0xff171717),
+                              color: const Color(0xff171717),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20.0),
                               ),
@@ -826,7 +827,7 @@ class _ChallengesState extends State<Challenges> {
                             "Complete level ${Data.playerLevel} to unlock this level");
                       }
                     },
-                    child: Container(
+                    child: SizedBox(
                       height: 70,
                       width: 120,
                       child: Data.playerLevel >= 14
@@ -836,7 +837,7 @@ class _ChallengesState extends State<Challenges> {
                                 borderRadius: BorderRadius.circular(20.0),
                               ),
                               elevation: 10,
-                              child: Row(
+                              child: const Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
@@ -850,7 +851,7 @@ class _ChallengesState extends State<Challenges> {
                                 ],
                               ))
                           : Card(
-                              color: Color(0xff171717),
+                              color: const Color(0xff171717),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20.0),
                               ),
@@ -879,7 +880,7 @@ class _ChallengesState extends State<Challenges> {
                             "Complete level ${Data.playerLevel} to unlock this level");
                       }
                     },
-                    child: Container(
+                    child: SizedBox(
                       height: 70,
                       width: 120,
                       child: Data.playerLevel >= 15
@@ -889,7 +890,7 @@ class _ChallengesState extends State<Challenges> {
                                 borderRadius: BorderRadius.circular(20.0),
                               ),
                               elevation: 10,
-                              child: Row(
+                              child: const Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
@@ -903,7 +904,7 @@ class _ChallengesState extends State<Challenges> {
                                 ],
                               ))
                           : Card(
-                              color: Color(0xff171717),
+                              color: const Color(0xff171717),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20.0),
                               ),
@@ -918,34 +919,8 @@ class _ChallengesState extends State<Challenges> {
                   ),
                 ],
               ),
-              // GestureDetector(
-              //   onTap: (){
-              //     Navigator.push(context, MaterialPageRoute(builder: (context) {
-              //       return ChooseChallenges();
-              //     },));
-              //     // snackBar("challenges will be added soon");
-              //   },
-              //   child: Container(
-              //     width: MediaQuery.of(context).size.width*0.8,
-              //     height: 80,
-              //     child: Card(
-              //       elevation: 10,
-              //       shape: RoundedRectangleBorder(
-              //         borderRadius: BorderRadius.circular(20),
-              //       ),
-              //       child: Center(
-              //         child: Text("Challenges",
-              //           style: TextStyle(
-              //               color: Color(0xffDD2A7B),
-              //               fontSize: 20,
-              //               fontWeight: FontWeight.w600
-              //           ),),
-              //       ),
-              //     ),
-              //   ),
-              // ),
               AnimatedContainer(
-                duration: Duration(milliseconds: 1400),
+                duration: const Duration(milliseconds: 1400),
                 curve: Curves.easeInOut,
                 color: Colors.transparent,
                 height: 100,
@@ -975,8 +950,8 @@ class _ChallengesState extends State<Challenges> {
                           child: Card(
                             color: Colors.white,
                             elevation: 8,
-                            margin: EdgeInsets.all(0),
-                            shape: RoundedRectangleBorder(
+                            margin: const EdgeInsets.all(0),
+                            shape: const RoundedRectangleBorder(
                               borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(15),
                                 bottomLeft: Radius.circular(15),
@@ -993,7 +968,7 @@ class _ChallengesState extends State<Challenges> {
                               child: CircleAvatar(
                                 radius: 40,
                                 backgroundColor: Colors.transparent,
-                                child: Image.asset("asset/images/$poke1.png"),
+                                child: Image.asset("assets/images/$poke1.png"),
                               ),
                             ),
                           ),
@@ -1019,8 +994,8 @@ class _ChallengesState extends State<Challenges> {
                           child: Card(
                             color: Colors.white,
                             elevation: 8,
-                            margin: EdgeInsets.all(0),
-                            shape: RoundedRectangleBorder(
+                            margin: const EdgeInsets.all(0),
+                            shape: const RoundedRectangleBorder(
                               borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(50),
                                 bottomLeft: Radius.circular(50),
@@ -1037,7 +1012,7 @@ class _ChallengesState extends State<Challenges> {
                               child: CircleAvatar(
                                 radius: 40,
                                 backgroundColor: Colors.transparent,
-                                child: Image.asset("asset/images/$poke2.png"),
+                                child: Image.asset("assets/images/$poke2.png"),
                               ),
                             ),
                           ),
