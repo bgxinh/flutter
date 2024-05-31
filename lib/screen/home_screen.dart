@@ -1,13 +1,10 @@
 import 'dart:async';
 import 'package:audioplayers/audioplayers.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:memory/data/data.dart';
 import 'package:memory/screen/challenges.dart';
 import 'package:memory/screen/setting.dart';
-import 'package:share/share.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'challenges_page.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -21,7 +18,6 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
   AudioPlayer bgSound = AudioPlayer();
   
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-  final fireStore = Firebase.initializeApp();
 
   bool change = false;
   late Timer timer;
@@ -84,22 +80,6 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
       setState(() {
         Data.neverPlay = myPrefs.getBool("play")!;
       });
-    }
-  }
-
-  Future<void> share() async {
-    try {
-      fireStore.then((value) async {
-        FirebaseFirestore.instance
-            .collection("memory")
-            .doc("1")
-            .get()
-            .then((result) {
-          Share.share(result.get("share"));
-        });
-      });
-    } catch (e) {
-      snackBar("Something went wrong");
     }
   }
 
