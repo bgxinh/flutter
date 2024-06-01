@@ -47,6 +47,7 @@ class _HomeScreenState extends State<HomeScreen> with WidgetsBindingObserver {
     if (!Data.neverPlay) {
       await bgSound.setSource(AssetSource("audios/background.wav"));
       await bgSound.resume();
+      await bgSound.setReleaseMode(ReleaseMode.loop);
       }
     }
 
